@@ -31,28 +31,33 @@ app.use(express.json());
     res.json({ message: 'Data received' });
 });*/
 app.post('/api', async (req, res) => {
-    const { url } = req.body;
+    const  url  = req.body;
     const apiKey = process.env.API_KEY;
-
+console.log("kkkk",url.formText);
     try {
         const response = await axios.post('https://api.meaningcloud.com/sentiment-2.1', null, {
             params: {
                 key: apiKey,
-                url: url,
+                url: url.formText,
                 lang: 'en', // Language parameter (optional), adjust as needed
             },
         });
 
         const data = response.data;
-
+console.log(response);
         if (data.status.code !== "0") {
             throw new Error(data.status.msg);
         }
+        const polarity = data.score_tag === "P+" || data.score_tag === "P" ? "positive" : 
+        data.score_tag === "N+" || data.score_tag === "N" ? "negative" : "neutral";
+
+        const subjectivity = data.subjectivity === "SUBJECTIVE" ? "subjective" : "factual";
+        const textSnippet = data.sentence_list && data.sentence_list.length > 0 ? data.sentence_list[0].text : "No snippet available";
 
         res.json({ 
-            text: data.sentence_list.map(sentence => sentence.text).join(' '),
-            sentiment: data.score_tag,
-            subjectivity: data.subjectivity,
+            polarity: polarity,
+            subjectivity: subjectivity,
+            text: textSnippet
         });
     } catch (error) {
         console.error("Error analyzing the article:", error.message);

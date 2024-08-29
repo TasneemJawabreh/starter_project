@@ -35,8 +35,10 @@ function handleSubmit(event) {
         .then(data => {
             console.log("Server response:", data);
             // Handle the response data
-            document.getElementById('results').innerHTML = data.text;
-            
+            document.getElementById('results').innerHTML += data.polarity;
+            document.getElementById('results1').innerHTML += data.subjectivity;
+            document.getElementById('results2').innerHTML += data.text;
+            document.getElementById('name').innerHTML = "";
         })
         .catch(error => console.error("Error:", error));
     } else {

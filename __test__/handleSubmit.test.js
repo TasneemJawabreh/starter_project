@@ -32,26 +32,33 @@ describe("Testing the submit functionality", () => {
   });
 
   test('should call fetch with the correct URL and method when a valid URL is provided', async () => {
-    const serverURL = 'https://localhost:8000/api';
-    const formText = 'https://example.com';
-    const expectedBody = JSON.stringify({ url: formText });
+    // Mock the fetch function
+    global.fetch = jest.fn(() =>
+        Promise.resolve({
+            json: () => Promise.resolve({ text: 'Mocked response text' }),
+        })
+    );
 
-    // Call the function (You might need to adjust the arguments passed to handleSubmit based on your implementation)
-    await handleSubmit({ preventDefault: () => {} }, formText, serverURL);
+    // Mock event to prevent page reload
+    const mockEvent = {
+        preventDefault: jest.fn(),
+    };
 
-    // Assert that fetch was called with the correct arguments
-    expect(fetch).toHaveBeenCalledTimes(1);
-    expect(fetch).toHaveBeenCalledWith(serverURL, {
+    // Call handleSubmit
+    await handleSubmit(mockEvent);
+
+    // Assert fetch was called with the correct arguments
+    expect(fetch).toHaveBeenCalledWith('http://localhost:8000/api', {
         method: 'POST',
         credentials: 'same-origin',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: expectedBody,
+        body: JSON.stringify({ formText: 'https://example.com' }),
     });
 
-
-    expect(console.log).toHaveBeenCalledWith('Server response:', { message: 'Mocked fetch response' });
+    // Clean up mock
+    global.fetch.mockClear();
 });
 
   test("should not call fetch when an invalid URL is provided", () => {
