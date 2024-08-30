@@ -10,7 +10,7 @@ This project is a web tool that leverages the MeaningCloud API to analyze the se
 
 ## usage
 ### 1-run the project
-By using package.json to install and start the project.use `npm i` then `npm start` 
+By using package.json to install and start the project.use `npm i` then `npm run build-dev ` open another terminal and run `npm run build-prod` then ` npm run start`. 
 ### 2-Open the Project in a Browser
 you can access the Web App usining this url `http://localhost:8000` 
 ### 3-test the project
