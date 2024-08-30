@@ -14,7 +14,7 @@ By using package.json to install and start the project.use `npm i` then `npm run
 ### 2-Open the Project in a Browser
 you can access the Web App usining this url `http://localhost:8000` 
 ### 3-test the project
-you can test the app using different urls .
+you can test the app using different urls or by runing  `npm run test`.
 
 
 ## Dependencies
