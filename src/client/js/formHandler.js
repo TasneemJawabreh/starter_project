@@ -1,5 +1,5 @@
 // Replace checkForName with a function that checks the URL
-
+import { checkForUrl } from './urlChecker'
 
 // If working on Udacity workspace, update this with the Server API URL e.g. `https://wfkdhyvtzx.prod.udacity-student-workspaces.com/api`
 // const serverURL = 'https://wfkdhyvtzx.prod.udacity-student-workspaces.com/api'
@@ -8,10 +8,10 @@ const serverURL = 'http://localhost:8000/api'
 const form = document.getElementById('urlForm');
 //form.addEventListener('submit', handleSubmit);
 // Function to send data to the server
-function isValidURL(url) {
+/*function isValidURL(url) {
     const regex = /^(https?:\/\/)?([a-z\d-]+\.)+[a-z]{2,6}(:\d{1,5})?(\/.*)?$/i;
     return regex.test(url);
-}
+}*/
 function handleSubmit(event) {
     event.preventDefault();
 
@@ -19,7 +19,7 @@ function handleSubmit(event) {
     const formText = document.getElementById('name').value;
 
     // Check if the URL is valid
-    if (isValidURL(formText)) {
+    if (checkForUrl(formText)) {
         console.log("Valid URL:", formText);
 
         // If the URL is valid, send it to the server using the serverURL constant above
